@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <title>F-16 OWNDAYS</title>
+  <title>OWNDAYS F-16</title>
 
-  <!-- 🍏 ตั้งค่าให้เป็นเสมือน Native App บน iOS (iPad/iPhone) -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="F-16 Hub">
   
-  <!-- โลโก้แอปตอนกด Add to Home Screen -->
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2800/2800258.png">
 
   <style>
@@ -33,25 +31,14 @@
 </head>
 <body>
 
-  <!-- 🖥️ กรอบที่จะดึงระบบของ Google Apps Script มาแสดง -->
   <iframe id="app-frame" allow="fullscreen"></iframe>
 
   <script>
-    // 🔗 1. ลิงก์ Web App หน้าหลัก F-16 Hub ตัวจริง
+    // 🔗 ลิงก์ Web App หน้าหลัก F-16 Hub ตัวจริง
     const GAS_URL = "https://script.google.com/macros/s/AKfycbyVZp09oHsU62CZvJVBBeEnOLtQrW3t8Ngxe3IFG-T90_AhoM-0UixTUW3dgmBSRdI1/exec"; 
 
-    // 🔍 2. ดักจับว่ามีการพิมพ์ ?branch=xxx ต่อท้ายลิงก์ GitHub หรือไม่
-    const urlParams = new URLSearchParams(window.location.search);
-    const branchCode = urlParams.get('branch');
-
-    // 🚀 3. ประกอบลิงก์แล้วส่งให้ Iframe ทำงาน
-    let finalUrl = GAS_URL;
-    if (branchCode) {
-      finalUrl += "?branch=" + branchCode;
-    }
-
-    // สั่งให้ Iframe โหลดหน้าเว็บ
-    document.getElementById('app-frame').src = finalUrl;
+    // สั่งให้ Iframe โหลดหน้าเว็บหลักทันที (ใช้ลิงก์เดียวแจกทั้งบริษัท)
+    document.getElementById('app-frame').src = GAS_URL;
   </script>
 
 </body>
