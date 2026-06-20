@@ -4,32 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>OWNDAYS F-16</title>
-
-  <!-- 🍏 ตั้งค่าให้เป็นเสมือน Native App บน iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="F-16 Hub">
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2800/2800258.png">
-
   <style>
     body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #f5f5f7; }
     iframe { width: 100%; height: 100%; border: none; display: block; }
   </style>
 </head>
 <body>
-
   <iframe id="app-frame" allow="fullscreen"></iframe>
-
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbyVZp09oHsU62CZvJVBBeEnOLtQrW3t8Ngxe3IFG-T90_AhoM-0UixTUW3dgmBSRdI1/exec"; 
 
-    // 1. อ่านค่าความจำจากฝั่ง GitHub (iPad จะไม่ลบความจำส่วนนี้ 100%)
+    // ดึงความจำจากตู้เซฟ GitHub
     let savedBranch = localStorage.getItem('hub_branch') || '';
     let savedShop = localStorage.getItem('hub_shop') || '';
     let savedStaff = localStorage.getItem('hub_staff') || '';
     let savedReg = localStorage.getItem('hub_reg') || '';
 
-    // 2. แปะค่าไปพร้อมกับลิงก์เพื่อส่งให้ Google Script รู้ว่าเคยล็อกอินแล้ว
+    // แนบความจำส่งให้ Google
     let finalUrl = GAS_URL + "?v=" + Date.now();
     if (savedBranch) finalUrl += "&branch=" + encodeURIComponent(savedBranch);
     if (savedShop) finalUrl += "&shop=" + encodeURIComponent(savedShop);
@@ -38,22 +33,19 @@
 
     document.getElementById('app-frame').src = finalUrl;
 
-    // 3. รอรับคำสั่งบันทึกความจำใหม่จาก Google Script
+    // รับคำสั่งเซฟความจำจาก Google
     window.addEventListener('message', function(event) {
       if (event.data) {
         if (event.data.action === 'save_all') {
-          // เซฟทั้งสาขาและชื่อพนักงาน
           localStorage.setItem('hub_branch', event.data.branch);
           localStorage.setItem('hub_shop', event.data.shop);
           localStorage.setItem('hub_staff', event.data.staff);
           localStorage.setItem('hub_reg', 'true');
         } else if (event.data.action === 'logout_staff') {
-          // ลบแค่พนักงาน แต่เครื่องยังจำสาขาเดิมไว้อยู่
           localStorage.removeItem('hub_staff');
         }
       }
     });
   </script>
-
 </body>
 </html>
